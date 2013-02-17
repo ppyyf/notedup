@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<versions>
+
+    <version id="2013020101" >
+        <changes>
+            <change>Fix the issue of account authentication</change>
+            <change>Fix the issue of sync failures on Android after copying public-shared notes from Evernote International</change>
+        </changes>
+    </version>
+    
+    
+    <version id="2012112301" >
+        <changes>
+            <change>skip creating empty notebooks or tags in target account</change>
+            <change>add status information of master thread</change>
+			<change>handle the cases where network is not available</change>
+        </changes>
+    </version>
+    
+    
+    <version id="2012111601" >
+        <changes>
+            <change>Check updates on startup</change>
+            <change>Fix a bug when notebooks/tags already exist with different letter cases</change>
+        </changes>
+    </version>
+
+    <version id="2012111401" >
+        <changes>
+            <change>Select notebooks to copy</change>
+            <change>Select tags to copy</change>
+            <change>Chinese language support.</change>
+        </changes>
+    </version>
+
+</versions>
