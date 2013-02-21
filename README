@@ -1,0 +1,7 @@
+Required Libraries:
+
+    1. Evernote SDK for Java
+        https://github.com/evernote/evernote-sdk-java
+    2. Scribe, the simple OAuth Java lib
+        https://github.com/fernandezpablo85/scribe-java
+
