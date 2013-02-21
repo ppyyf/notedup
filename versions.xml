@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <versions>
 
+    <version id="2013022001" >
+        <changes>
+            <change>Added an option to update note links after copying notes.</change>
+            <change>Cleanup YXBJ accounts which fail to sync on Android devices after using NoteDup.</change>
+            <change>Fix the issue that the copied notes cannot be synced on Android devices</change>
+            <change>新功能：完成笔记复制后自动更新笔记链接。</change>
+            <change>新功能：修复因使用之前版本NodeDup导入数据导致的Android设备无法同步帐户的问题。</change>
+            <change>修复：某些笔记复制到印象笔记帐户导致该帐户无法在Android设备上同步。</change>
+        </changes>
+    </version>
+    
     <version id="2013020101" >
         <changes>
             <change>Fix the issue of account authentication</change>
-            <change>Fix the issue of sync failures on Android after copying public-shared notes from Evernote International</change>
         </changes>
     </version>
     
