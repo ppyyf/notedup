@@ -61,10 +61,45 @@ public class MainUI extends JFrame {
 	
 	private List<String> selectedNotebooks;
 	private List<String> selectedTags;
+
 	private JCheckBox chckbxUpdateNoteLinks;
 	private JButton btnFixAccount;
 	private JButton btnSelection;
 	
+	public void setDevToken(final String devToken, final int type) {
+		Thread t = new Thread() {
+			public void run(){
+				statusPane = new StatusPane(self,Messages.getString("MainUI.status.retrieving")); //$NON-NLS-1$
+				if (devToken != null){
+					if (type == 0){
+						accountSource = new Account(serviceHostSource,devToken);
+						if (accountSource.isInitialized()){
+							uname_source.setText(accountSource.getUsername());					
+						} else {
+							uname_source.setText("["+Messages.getString("DevTokenFrame.devtoken.invalid")+"]");										 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						}
+					} else if (type == 1){
+						accountTarget = new Account(serviceHostTarget,devToken);
+						if (accountTarget.isInitialized()){
+							uname_target.setText(accountTarget.getUsername());
+							if (accountTarget.getEvernoteHost().contains("yinxiang")){ //$NON-NLS-1$
+								btnFixAccount.setEnabled(true);
+							}
+						} else {
+							uname_target.setText("["+Messages.getString("DevTokenFrame.devtoken.invalid")+"]");					 //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						}
+					} else if (type == 2){
+						if (accountTarget != null && accountTarget.isInitialized() && accountTarget.getEvernoteHost().contains("yinxiang")){ //$NON-NLS-1$
+							btnFixAccount.setEnabled(true);
+						}				
+					}
+				}
+				statusPane.done();
+			}
+		};
+		t.start();
+	}
+
 	private String getServiceHost(String serviceType){
 		if (serviceType!=null){
 			if (serviceType.equals(supported_account_types[0])){
@@ -145,26 +180,29 @@ public class MainUI extends JFrame {
 		
 		login_source = new JButton(Messages.getString("MainUI.button.login")); //$NON-NLS-1$
 		login_source.addActionListener(new ActionListener() {
-			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				Thread t = new Thread(){
-					@Override
-					public void run(){
-						setEnabled(false);
-						statusPane = new StatusPane(self,Messages.getString("MainUI.status.authenticating")); //$NON-NLS-1$
-						authHelperSource = new AuthHelperSystemBrowser(serviceHostSource);
-						String oauthToken = authHelperSource.getOAuthToken();
-						statusPane.setMessage(Messages.getString("MainUI.status.retrieving")); //$NON-NLS-1$
-						if (oauthToken != null){
-							accountSource = new Account(serviceHostSource,oauthToken);
-							uname_source.setText(accountSource.getUsername());
+				if ((e.getModifiers() & ActionEvent.CTRL_MASK) > 0){
+					new DevTokenFrame(self, serviceHostSource, 0);
+				} else {
+					Thread t = new Thread(){
+						@Override
+						public void run(){
+							setEnabled(false);
+							statusPane = new StatusPane(self,Messages.getString("MainUI.status.authenticating")); //$NON-NLS-1$
+							authHelperSource = new AuthHelperSystemBrowser(serviceHostSource);
+							String oauthToken = authHelperSource.getOAuthToken();
+							statusPane.setMessage(Messages.getString("MainUI.status.retrieving")); //$NON-NLS-1$
+							if (oauthToken != null){
+								accountSource = new Account(serviceHostSource,oauthToken);
+								uname_source.setText(accountSource.getUsername());
+							}
+							statusPane.done();
+							setEnabled(true);
 						}
-						statusPane.done();
-						setEnabled(true);
-					}
-				};
-				t.start();
+					};
+					t.start();
+				}
 			}
 		});
 		panel_source.add(login_source);
@@ -203,27 +241,33 @@ public class MainUI extends JFrame {
 		login_target.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Thread t = new Thread(){
-					@Override
-					public void run(){
-						setEnabled(false);
-						btnFixAccount.setEnabled(false);
-						statusPane = new StatusPane(self,Messages.getString("MainUI.status.authenticating")); //$NON-NLS-1$
-						authHelperTarget = new AuthHelperSystemBrowser(serviceHostTarget);
-						String oauthToken = authHelperTarget.getOAuthToken();
-						statusPane.setMessage(Messages.getString("MainUI.status.retrieving")); //$NON-NLS-1$
-						if (oauthToken != null){
-							accountTarget = new Account(serviceHostTarget,oauthToken);
-							uname_target.setText(accountTarget.getUsername());
-							if (accountTarget.getEvernoteHost().contains("yinxiang")){ //$NON-NLS-1$
-								btnFixAccount.setEnabled(true);
+				 
+				if ((e.getModifiers() & ActionEvent.CTRL_MASK) > 0){
+					btnFixAccount.setEnabled(false);
+					new DevTokenFrame(self,serviceHostTarget,1);
+				} else {
+					Thread t = new Thread(){
+						@Override
+						public void run(){
+							setEnabled(false);
+							btnFixAccount.setEnabled(false);
+							statusPane = new StatusPane(self,Messages.getString("MainUI.status.authenticating")); //$NON-NLS-1$
+							authHelperTarget = new AuthHelperSystemBrowser(serviceHostTarget);
+							String oauthToken = authHelperTarget.getOAuthToken();
+							statusPane.setMessage(Messages.getString("MainUI.status.retrieving")); //$NON-NLS-1$
+							if (oauthToken != null){
+								accountTarget = new Account(serviceHostTarget,oauthToken);
+								uname_target.setText(accountTarget.getUsername());
+								if (accountTarget.getEvernoteHost().contains("yinxiang")){ //$NON-NLS-1$
+									btnFixAccount.setEnabled(true);
+								}
 							}
+							statusPane.done();
+							setEnabled(true);
 						}
-						statusPane.done();
-						setEnabled(true);
-					}
-				};
-				t.start();
+					};
+					t.start();
+				}
 			}
 		});
 		panel_target.add(login_target);
