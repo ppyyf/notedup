@@ -1,15 +1,18 @@
 package com.evernote.trunk.nodedup;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 
 import com.evernote.edam.type.Note;
 import com.evernote.edam.type.Notebook;
+import com.evernote.edam.type.SavedSearch;
 
 public class NoteCopyMaster extends Thread {
 	private final Account source;
 	private final Account target;
 	private final String sourceTag;
+	private final String targetTag;
 	private final CopyState copyState;
 	private final BlockingQueue<NoteCopyTask> noteQueue;
 	private final List<String> selectedNotebooks;
@@ -22,6 +25,7 @@ public class NoteCopyMaster extends Thread {
 		this.source = source;
 		this.target = target;
 		this.sourceTag = sourceTag;
+		this.targetTag = targetTag;
 		this.copyState = copyState;
 		this.noteQueue = noteQueue;
 		this.selectedNotebooks = selectedNotebooks;
@@ -57,7 +61,8 @@ public class NoteCopyMaster extends Thread {
 			setCurrentState(Messages.getString("NoteCopyMaster.state.checking"), Messages.getString("NoteCopyMaster.state.notebook"), notebook.getName()); //$NON-NLS-1$ //$NON-NLS-2$
 			int ncount = source.getNotesInNotebook(notebook.getGuid()).size();
 			// make sure the notebook is present in target account.
-			if(ncount > 0 && target.getNotebookByName(notebook.getName()) == null){
+			// create notebook if it doesn't exist in target account even if it is empty in source account.
+			if((ncount > 0||true) && target.getNotebookByName(notebook.getName()) == null){
 				setCurrentState(Messages.getString("NoteCopyMaster.state.creating"), Messages.getString("NoteCopyMaster.state.notebook"), notebook.getName()); //$NON-NLS-1$ //$NON-NLS-2$
 				target.createNotebook(notebook.getName(), notebook.getStack());
 			}
@@ -138,7 +143,22 @@ public class NoteCopyMaster extends Thread {
 		}
 		// no more notes to enqueue
 		copyState.done();
+		
+		// copy saved searches from source to target
+		List<SavedSearch> searches_source = source.getSavedSearches();
+		List<SavedSearch> searches_target = target.getSavedSearches();
+		List<String> searchnames_target = new ArrayList<String>();
+		for (SavedSearch s : searches_target){
+			searchnames_target.add(s.getName());
+		}
+		for (SavedSearch s : searches_source){
+			if (!searchnames_target.contains(s.getName())){
+				target.createSavedSearch(s);
+				searchnames_target.add(s.getName());
+			}
+		}
 	}
+
 	public synchronized String getCurrentState(){
 		return currentState;
 	}

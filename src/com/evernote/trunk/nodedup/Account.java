@@ -23,6 +23,7 @@ import com.evernote.edam.notestore.NotesMetadataResultSpec;
 import com.evernote.edam.type.Note;
 import com.evernote.edam.type.Notebook;
 import com.evernote.edam.type.Resource;
+import com.evernote.edam.type.SavedSearch;
 import com.evernote.edam.type.Tag;
 import com.evernote.edam.userstore.Constants;
 import com.evernote.edam.userstore.UserStore;
@@ -364,6 +365,10 @@ public class Account {
 	}
 	public Tag getTag(String guid){
 		Tag ret = null;
+		ret = this.getTagByGuid(guid);
+		if (ret !=null){
+			return ret;
+		}
 		int tried = 0;
 		while(tried<this.retry){
 			tried ++;
@@ -773,5 +778,46 @@ public class Account {
 			this.replaceNoteLinks(this, allNotes, guidMap);
 		}
 		return count;
+	}
+
+	public List<SavedSearch> getSavedSearches(){
+		List<SavedSearch> res = null;
+		int tried = 0;
+		while(tried<this.retry){
+			tried ++;
+			try {
+				res = this.noteStore.listSearches(authToken);
+				break;
+			} catch (EDAMUserException e) {
+				e.printStackTrace();
+			} catch (EDAMSystemException e) {
+				e.printStackTrace();
+			} catch (TException e) {
+				e.printStackTrace();
+			}
+		}
+		return res;
+	}
+
+	public boolean createSavedSearch(SavedSearch s){
+		boolean res = false;
+		int tried = 0;
+		while(tried<this.retry){
+			tried ++;
+			try {
+				SavedSearch ret = this.noteStore.createSearch(authToken, s);
+				if (ret != null && ret.getGuid() != null){
+					res = true;
+				}
+				break;
+			} catch (EDAMUserException e) {
+				e.printStackTrace();
+			} catch (EDAMSystemException e) {
+				e.printStackTrace();
+			} catch (TException e) {
+				e.printStackTrace();
+			}
+		}
+		return res;
 	}
 }

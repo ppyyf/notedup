@@ -105,11 +105,11 @@ public class NoteCopySlave extends Thread {
 		if(srcNote.getTagGuidsSize()>0){
 			List<String> tagNames = new LinkedList<String>();
 			for(String tagGuid : srcNote.getTagGuids()){
-				if (source.getTagByGuid(tagGuid)!=null){
-					tagNames.add(source.getTagByGuid(tagGuid).getName());
-				} else {
 					tagNames.add(source.getTag(tagGuid).getName());
-				}
+					String parentTagGuid = source.getTag(tagGuid).getParentGuid();
+					if (parentTagGuid != null){
+						target.createTag(source.getTag(tagGuid).getName(), source.getTag(parentTagGuid).getName());
+					}
 			}
 			srcNote.setTagNames(tagNames);
 			srcNote.setTagGuids(null);

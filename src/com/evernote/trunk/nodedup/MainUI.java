@@ -568,6 +568,11 @@ public class MainUI extends JFrame {
 				taskSummary = String.format(summaryFormat, cs.getCopied(),cs.getFailed(),cs.getSkipped(),cs.getNotcopied(),cs.getUploadedSize(),timeUsed);
 				if (allThreadsDone){
 					taskSummary += splitLine+Messages.getString("MainUI.status.all.done"); //$NON-NLS-1$
+					if (cs.getNotcopied()>0){
+						taskSummary += "\n\n"+ //$NON-NLS-1$
+								Messages.getString("MainUI.tip.support.ticket")+ //$NON-NLS-1$
+								"\n    http://www.yinxiang.com/contact/support/\n"; //$NON-NLS-1$
+					}
 				}
 				textArea.setText(head+splitLine+taskState+splitLine+taskSummary);
 				if (allThreadsDone){
