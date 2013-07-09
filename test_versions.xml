@@ -3,8 +3,8 @@
 
     <version id="2013070901" >
         <changes>
-            <change>For Windows</change>
-            <change>For Mac</change>
+            <change><![CDATA[<a href="http://vdisk.weibo.com/s/HxcwI">For Mac</a>]]></change>
+            <change><![CDATA[<a href="http://vdisk.weibo.com/s/Hxcwy">For Windows</a>]]></change>
         </changes>
     </version>
 
