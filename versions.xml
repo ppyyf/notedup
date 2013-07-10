@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <versions>
 
+    <version id="2013071001" >
+        <changes>
+            <change><![CDATA[<a href="http://vdisk.weibo.com/s/JkfLv">For Mac/Mac版</a>]]></change>
+            <change><![CDATA[<a href="http://vdisk.weibo.com/s/JjQIO">For Windows/Windows版</a>]]></change>
+            <change>New Feature: copy saved searches</change>
+            <change>New Feature: copy tag hierarchies</change>
+            <change>Copy empty notebooks</change>
+            <change>Display reasons if any notes could not be copied</change>
+            <change>Display Yinxiang Biji customer support hyperlink for increasing upload limit temporarily</change>
+            <change>Do not copy notes if the source and target accounts are identical</change>
+            <change>新功能：复制保存的搜索</change>
+            <change>新功能：复制标签结构</change>
+            <change>复制空笔记本</change>
+            <change>显示无法复制笔记的原因</change>
+            <change>流量不足时，显示申请临时流量的印象笔记客服链接</change>
+            <change>源帐户和目标帐户相同时不能复制</change>
+        </changes>
+    </version>
+
     <version id="2013022001" >
         <changes>
             <change>Added an option to update note links after copying notes.</change>
