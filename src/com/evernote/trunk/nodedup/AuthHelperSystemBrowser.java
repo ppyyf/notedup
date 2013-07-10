@@ -22,14 +22,12 @@ public class AuthHelperSystemBrowser extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final static String key = "__APIKEY__"; //$NON-NLS-1$
-	private final static String secret = "__APISECRET__"; //$NON-NLS-1$
 	private String host;
 	private String urlBase;
 	private String authorizationUrl;
 	
 	public static String getKey() {
-		return key;
+		return Constants.API_KEY;
 	}
 
 	public AuthHelperSystemBrowser(String serviceHost) {
@@ -93,8 +91,8 @@ public class AuthHelperSystemBrowser extends JFrame {
 
 		OAuthService service = new ServiceBuilder()
 		.provider(providerClass)
-		.apiKey(key)
-		.apiSecret(secret)
+		.apiKey(Constants.API_KEY)
+		.apiSecret(Constants.API_SECRET)
 		.callback(callbackUrl)
 		.build();
 

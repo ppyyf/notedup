@@ -37,7 +37,6 @@ public class NewVersionChecker extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private final long buildid;
-	private static final String VERSIONS_XML_URL="http://notedup.googlecode.com/files/versions.xml"; //$NON-NLS-1$
 	private static final String ROOT_ELEMENT="versions"; //$NON-NLS-1$
 	private long latest = 0;
 	private List<String> changes = new LinkedList<String>();
@@ -66,11 +65,11 @@ public class NewVersionChecker extends JFrame {
 		try {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(VERSIONS_XML_URL+"?"+(new Date()).getTime()); //$NON-NLS-1$
+			Document doc = dBuilder.parse(Constants.VERSIONS_XML_URL+"?"+(new Date()).getTime()); //$NON-NLS-1$
 			doc.getDocumentElement().normalize();
 			if (ROOT_ELEMENT.equals(doc.getDocumentElement().getNodeName())){
 				NodeList nList = doc.getElementsByTagName("version"); //$NON-NLS-1$
-				for (int temp = 0; temp < nList.getLength(); temp++) {					 
+				for (int temp = 0; temp < nList.getLength(); temp++) {
 					Node nNode = nList.item(temp);
 					if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 						Element eElement = (Element) nNode;
@@ -122,16 +121,16 @@ public class NewVersionChecker extends JFrame {
 						} catch (IOException e) {
 						} catch (URISyntaxException e) {
 						}
-					}  
-				}  
-			});  
+					}
+				}
+			});
 			scrollPane.setViewportView(editorPane);
 			String textHtml = "<H1>"+Messages.getString("NewVersionChecker.title")+"</H1>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			textHtml += Messages.getString("NewVersionChecker.current.version")+": "+this.buildid+"<br/>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			textHtml += Messages.getString("NewVersionChecker.latest.version")+": "+this.latest+"<br/>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-			textHtml += "<H3>"+Messages.getString("NewVersionChecker.downloads")+"</H3>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-			textHtml += "<li><a href=\"http://vdisk.weibo.com/s/hIoBo\">"+"Windows"+"</li>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-			textHtml += "<li><a href=\"http://vdisk.weibo.com/s/hIjMU\">"+"Mac"+"</li>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			//textHtml += "<H3>"+Messages.getString("NewVersionChecker.downloads")+"</H3>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			//textHtml += "<li><a href=\"http://vdisk.weibo.com/s/hIoBo\">"+"Windows"+"</li>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			//textHtml += "<li><a href=\"http://vdisk.weibo.com/s/hIjMU\">"+"Mac"+"</li>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 			textHtml += "<H3>"+Messages.getString("NewVersionChecker.whats.new")+"</H3>"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			for (String change: this.changes){

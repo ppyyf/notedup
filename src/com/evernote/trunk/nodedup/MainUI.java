@@ -28,7 +28,6 @@ import javax.swing.JCheckBox;
 
 public class MainUI extends JFrame {
 
-	private static final long BUILDID=__BUILDID__;
 	private static final long serialVersionUID = 1L;
 	private JTextField uname_source;
 	private JTextField uname_target;
@@ -124,7 +123,7 @@ public class MainUI extends JFrame {
 			}
 		});
 		
-		new NewVersionChecker(BUILDID);
+		new NewVersionChecker(Constants.BUILDID);
 	}
 
 	/**
@@ -426,7 +425,7 @@ public class MainUI extends JFrame {
 		textArea.setPreferredSize(new Dimension(600,500));
 		textArea.setEditable(false);
 		panel_status.add(textArea, BorderLayout.CENTER);
-		textArea.setText(Messages.getString("NewVersionChecker.current.version")+": "+BUILDID); //$NON-NLS-1$ //$NON-NLS-2$
+		textArea.setText(Messages.getString("NewVersionChecker.current.version")+": "+Constants.BUILDID); //$NON-NLS-1$ //$NON-NLS-2$
 		this.pack();
 	}
 	
@@ -438,6 +437,13 @@ public class MainUI extends JFrame {
 				System.out.println("WARNING: Remove this check at your own risk."); //$NON-NLS-1$
 				return;
 			}
+
+			if(source.getEvernoteHost() != null && source.getEvernoteHost().equals(target.getEvernoteHost()) 
+					&& source.getUsername() != null && source.getUsername().equals(target.getUsername())){
+				new Dialog(self,Messages.getString("MainUI.dialog.error"),Messages.getString("MainUI.dialog.sameaccount")); //$NON-NLS-1$ //$NON-NLS-2$
+				return;
+			}
+
 			source.updateTagHashes();
 			uploadLimit *= 1024*1024;
 			long targetUploadLimit = target.getUploadLimit();
