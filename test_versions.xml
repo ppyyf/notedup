@@ -3,8 +3,8 @@
 
     <version id="2014031301" >
         <changes>
-            <change><![CDATA[<a href="http://vdisk.weibo.com/s/JkfLv">For Mac / Mac版</a>]]></change>
-            <change><![CDATA[<a href="http://vdisk.weibo.com/s/JjQIO">For Windows / Windows版</a>]]></change>
+            <change><![CDATA[<a href="http://vdisk.weibo.com/s/uf8fLIDZiIrLc">For Mac / Mac版</a>]]></change>
+            <change><![CDATA[<a href="http://vdisk.weibo.com/s/uf8fLIDZiIr4L">For Windows / Windows版</a>]]></change>
             <change>Fixed authentication issue</change>
             <change>Removed unnecessary service API calls</change>
             <change>Show a warning message when API rate limit is reached and retry after the limit period</change>
