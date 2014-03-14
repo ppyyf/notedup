@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <versions>
 
+    <version id="2014031401" >
+        <changes>
+            <change><![CDATA[<a href="http://vdisk.weibo.com/s/uf8fLIDZiIMgi">For Mac / Mac版</a>]]></change>
+            <change><![CDATA[<a href="http://vdisk.weibo.com/s/uf8fLIDZiIMgR">For Windows / Windows版</a>]]></change>
+            <change>Fixed authentication issue</change>
+            <change>Removed unnecessary service API calls</change>
+            <change>Show a warning message when API rate limit is reached and retry after the limit period</change>
+            <change>修复帐户认证问题</change>
+            <change>移除不必要的服务接口调用</change>
+            <change>服务接口调用频率受限时显示提示信息，并在受限时段结束后自动重试</change>
+        </changes>
+    </version>
+
     <version id="2013071001" >
         <changes>
-            <change><![CDATA[<a href="http://vdisk.weibo.com/s/JkfLv">For Mac/Mac版</a>]]></change>
-            <change><![CDATA[<a href="http://vdisk.weibo.com/s/JjQIO">For Windows/Windows版</a>]]></change>
             <change>New Feature: copy saved searches</change>
             <change>New Feature: copy tag hierarchies</change>
             <change>Copy empty notebooks</change>
